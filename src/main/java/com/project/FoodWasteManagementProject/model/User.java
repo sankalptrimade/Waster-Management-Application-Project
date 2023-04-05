@@ -8,52 +8,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tbl_Ngos")
-public class NGOs {
+@Table(name = "tbl_user")
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="Ngo_id")
-	private Integer id;
-	
-	@Column(name="Ngo_username")
-	private String ngoName;
-	
-	@Column(name="Ngo_password")
-	private String password;
-	
-	@Column(name="Ngo_type")
-	private String type;
-	
-	@Column(name="Ngo_fullname")
-	private String ngoFullname;
-	
-	@Column(name="Ngo_address")
-	private String address;
-	
-	@Column(name = "ngo_city")
+	@Column(name ="tbl_userId")
+	private Integer userId;
+	@Column(name ="tbl_username")
+	private String username;
+	@Column(name ="tbl_firstname")
+	private String firstName;
+	@Column(name ="tbl_lastname")
+	private String lastName;
+	@Column(name ="tbl_city")
 	private String city;
-	
-	@Column(name="Ngo_pincode")
-	@NotNull
-	private Integer pinCode;
-	
-	@Column(name="Ngo_phonenumber")
-	private String phoneNumber;
+	@Column(name ="tbl_number")
+	private String number;
 	
 	@ManyToOne
 	@JoinColumn(name = "statusId")
 	private Status statusid;
 	
-	
-
 }

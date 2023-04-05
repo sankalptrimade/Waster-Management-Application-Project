@@ -3,13 +3,19 @@ package com.project.FoodWasteManagementProject.utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.project.FoodWasteManagementProject.model.NGOs;
+import com.project.FoodWasteManagementProject.model.Status;
+import com.project.FoodWasteManagementProject.repository.StatusRepository;
 
 @Component
 public class SetNgos {
 
+	@Autowired
+	StatusRepository statusRepository;
+	
 	public JSONArray validateNgo(JSONObject jsObject) {
 	  JSONArray jsonArray=new JSONArray();
 	  if(!jsObject.has("ngoName")) {
@@ -33,6 +39,9 @@ public class SetNgos {
 	  if(!jsObject.has("pinCode")) {
 			 jsonArray.put("pinCode is Not present"); 
 		  }
+	  if(!jsObject.has("phoneNumber")) {
+		  jsonArray.put("phoneNumber is Not present"); 
+	  }
 	  
 	  
 		return jsonArray;
@@ -43,6 +52,7 @@ public class SetNgos {
 	public NGOs setNgo(String ngo) {
 		JSONObject jsonObject=new JSONObject(ngo);
 		NGOs newNgos=new NGOs();
+		
 		newNgos.setNgoName(jsonObject.getString("ngoName"));
 		newNgos.setPassword(jsonObject.getString("password"));
 		newNgos.setNgoFullname(jsonObject.getString("ngoFullname"));
@@ -50,6 +60,9 @@ public class SetNgos {
 		newNgos.setAddress(jsonObject.getString("address"));
 		newNgos.setCity(jsonObject.getString("city"));
 		newNgos.setPinCode(jsonObject.getInt("pinCode"));
+		newNgos.setPhoneNumber(jsonObject.getString("phoneNumber"));
+		Status status=statusRepository.findById(1).get();
+		newNgos.setStatusid(status);
 		return newNgos;
 	}
 	
@@ -82,6 +95,20 @@ public class SetNgos {
 				oldNgOs.setPinCode(jsonObject.getInt("pinCode"));
 			  }
 		return oldNgOs;
+	}
+	
+	public JSONObject getNgos(NGOs ngOs) {
+		
+		 JSONObject ngoJsonObject=new JSONObject();
+		 ngoJsonObject.put("NGO Full Name",ngOs.getNgoFullname());
+		 ngoJsonObject.put("City",ngOs.getCity());
+		 ngoJsonObject.put("Address",ngOs.getAddress());
+		 ngoJsonObject.put("Pincode",ngOs.getPinCode());
+		 ngoJsonObject.put("Type",ngOs.getType());
+		 ngoJsonObject.put("phoneNumber",ngOs.getPhoneNumber());
+		
+		 
+		 return ngoJsonObject;
 	}
 
 }
